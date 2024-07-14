@@ -33,7 +33,6 @@ func GetYoutubeMP3(videoID string) ([]byte, error) {
 	}
 
 	formats := video.Formats.WithAudioChannels() // only get videos with audio
-
 	stream, _, err := client.GetStream(video, &formats[0])
 	if err != nil {
 		return nil, err
