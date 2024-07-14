@@ -24,7 +24,7 @@ func ConvertMp4ToMp3(inputFile string, outputFile string) error {
 	return nil
 }
 
-func GetYoutubeVideo(videoID string) {
+func GetYoutubeMP3(videoID string) ([]byte, error) {
 	client := youtube.Client{}
 
 	video, err := client.GetVideo(videoID)
@@ -36,18 +36,13 @@ func GetYoutubeVideo(videoID string) {
 
 	stream, _, err := client.GetStream(video, &formats[0])
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	defer stream.Close()
 
-	file, err := os.Create("mp4source/" + videoID + ".mp4")
+	audioData, err := io.ReadAll(stream)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	defer file.Close()
-
-	_, err = io.Copy(file, stream)
-	if err != nil {
-		panic(err)
-	}
+	return audioData, nil
 }
