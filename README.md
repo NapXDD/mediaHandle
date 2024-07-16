@@ -1,1 +1,1 @@
-The main branch is to save an MP3 from youtube
+The main branch is to save the MP3 from youtube
